@@ -1,11 +1,24 @@
 import React from 'react'
-import logo from "../assets/favicon.jpg"
+import { assets } from '../assets/assets'
+import { useNavigate } from "react-router-dom"
 
 const Navbar = () => {
+
+  const navigate = useNavigate()
+
   return (
-    <div>
-      <img src={logo} alt="logo.jpg" className='w-14 sm:w-24 rounded-3xl' />
-      <button>Login</button>
+    <div className='w-full flex justify-between items-center p-4 sm:p-6
+    sm:px-24 absolute top-0'> 
+
+      <img src={assets.logo} alt="logo.jpg" className='w-24 sm:w-32 rounded-3xl cursor-pointer' />
+      
+      <button 
+      onClick={()=>navigate("/Login")}
+      className='flex items-center gap-2 border border-gray-500
+      rounded-full px-6 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer
+      transition-all'>
+        Login <img src={assets.arrow_icon}  alt='arrow-icon' />
+      </button>
     </div>
   )
 }
