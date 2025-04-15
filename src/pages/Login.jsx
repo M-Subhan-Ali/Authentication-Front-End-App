@@ -1,11 +1,54 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {assets} from "../assets/assets.js"
 import { useNavigate } from "react-router-dom"
+import { appContext } from '../context/appContext.js'
+import axios from "axios"
+
 const Login = () => {
 
   const navigate = useNavigate();
 
-  const [ pageDetail , setPageDetail ] = useState("Sign Up")
+  const {Backend_URL , setIsLoggedIn} = useContext(appContext)
+
+  const [ pageDetail , setPageDetail ] = useState("Sign Up");
+  const [ name , setName ] = useState("");
+  const [ email , setEmail ] = useState("");
+  const [ password , setPassword ] = useState("");
+
+
+  const onSubmitHandler = async ( e ) => {
+    try {
+      e.preventDefault();
+
+      axios.defaults.withCredentials = true ;
+
+      if(state=== "Sign Up"){
+
+      const {data} = await axios.post(Backend_URL+"/api/auth/register",{name , email , password})
+
+      if(data.success){
+
+        setIsLoggedIn(true)
+        navigate("/")
+
+      }else{
+        alert(data.message)
+      }
+      
+    }else{
+      const {data} = await axios.post(Backend_URL + "/api/auth/login" , { email , password })
+      if(data.success){
+        setIsLoggedIn(true)
+        navigate("/")
+      }else{
+        alert(data.message)
+      }
+    }
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
 
   return (
     <div className='flex items-center justify-center min-h-screen px-6 sm:px-0
@@ -24,23 +67,29 @@ const Login = () => {
         <p className='text-center text-sm mb-6'>
           { pageDetail === "Sign Up" ? "Create Your Account" : "Login to Your Account!"}
         </p>
-        <form>
+        <form onSubmit={onSubmitHandler}>
           {pageDetail === "Sign Up" && <div className='mb-4 flex items-center gap-3 w-full  px-5 py-2.5 rounded-full
           bg-[#333A5C]'>
             <img src={assets.person_icon} alt="person_icon" />
             <input type="text" placeholder='Full Name'
+            value={name}
+            onChange={(e)=>setName(e.target.value)}
             className='bg-transparent outline-none text-white' required />
           </div>}
           <div className='mb-4 flex items-center gap-3 w-full  px-5 py-2.5 rounded-full
           bg-[#333A5C]'>
             <img src={assets.mail_icon} alt="person_icon" />
             <input type="email" placeholder='Email ID'
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
             className='bg-transparent outline-none text-white' required />
           </div>
           <div className='mb-4 flex items-center gap-3 w-full  px-5 py-2.5 rounded-full
           bg-[#333A5C]'>
             <img src={assets.lock_icon} alt="person_icon" />
             <input type="password" placeholder='Password'
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
             className='bg-transparent outline-none text-white' required />
           </div>
           <p 
