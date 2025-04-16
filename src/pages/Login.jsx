@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import {assets} from "../assets/assets.js"
 import { useNavigate } from "react-router-dom"
-import { appContext } from '../context/appContext.js'
+import { appContext } from '../context/appContext.jsx'
 import axios from "axios"
 
 const Login = () => {
@@ -22,13 +22,14 @@ const Login = () => {
 
       axios.defaults.withCredentials = true ;
 
-      if(state=== "Sign Up"){
+      if( pageDetail === "Sign Up" ){
 
       const {data} = await axios.post(Backend_URL+"/api/auth/register",{name , email , password})
 
       if(data.success){
 
         setIsLoggedIn(true)
+        alert(data.message)
         navigate("/")
 
       }else{
@@ -36,7 +37,7 @@ const Login = () => {
       }
       
     }else{
-      const {data} = await axios.post(Backend_URL + "/api/auth/login" , { email , password })
+      const {data} = await axios.post(`${Backend_URL}/api/auth/login` , { email , password })
       if(data.success){
         setIsLoggedIn(true)
         navigate("/")
@@ -45,7 +46,8 @@ const Login = () => {
       }
     }
     } catch (error) {
-      alert(error.message)
+      alert(error.response.data.message)
+      // console.log(error)
     }
   }
 
@@ -97,7 +99,7 @@ const Login = () => {
           className='mb-4 text-indigo-500 hover:text-indigo-200
            cursor-pointer '>Forget Password?
           </p>
-          <button className='w-full py-2.5 rounded-full bg-gradient-to-r cursor-pointer 
+          <button type='submit' className='w-full py-2.5 rounded-full bg-gradient-to-r cursor-pointer 
           from-indigo-500 to-indigo-900 text-white font-medium hover:text-gray-300'>{pageDetail}</button>
         </form>
         
