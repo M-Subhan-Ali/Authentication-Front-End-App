@@ -3,12 +3,14 @@ import {assets} from "../assets/assets.js"
 import { useNavigate } from "react-router-dom"
 import { appContext } from '../context/appContext.jsx'
 import axios from "axios"
+import { toast } from 'react-toastify'
+
 
 const Login = () => {
 
   const navigate = useNavigate();
 
-  const {Backend_URL , setIsLoggedIn} = useContext(appContext)
+  const {Backend_URL , setIsLoggedIn , getUserData} = useContext(appContext)
 
   const [ pageDetail , setPageDetail ] = useState("Sign Up");
   const [ name , setName ] = useState("");
@@ -24,29 +26,75 @@ const Login = () => {
 
       if( pageDetail === "Sign Up" ){
 
-      const {data} = await axios.post(Backend_URL+"/api/auth/register",{name , email , password})
+      const {data} = await axios.post(`${Backend_URL}/api/auth/register`,{name , email , password})
 
       if(data.success){
 
         setIsLoggedIn(true)
-        alert(data.message)
+        // alert(data.message)
+        getUserData()
+        toast.success(data.message, {
+          position: "top-center",
+          autoClose: 3000, // 3 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored", // or "light", "dark"
+        });
+        
         navigate("/")
 
       }else{
-        alert(data.message)
+        toast.error(data.message, {
+          position: "top-center",
+          autoClose: 3000, // 3 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored", // or "light", "dark"
+        });
       }
       
     }else{
       const {data} = await axios.post(`${Backend_URL}/api/auth/login` , { email , password })
       if(data.success){
         setIsLoggedIn(true)
+        getUserData()
+        toast.success(data.message, {
+          position: "top-center",
+          autoClose: 3000, // 3 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored", // or "light", "dark"
+        });
         navigate("/")
       }else{
-        alert(data.message)
+        toast.error(data.message, {
+          position: "top-center",
+          autoClose: 3000, // 3 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored", // or "light", "dark"
+        });
       }
     }
     } catch (error) {
-      alert(error.response.data.message)
+      // alert(error.response.data.message)
+      toast.error(error.response.data.message, {
+        position: "top-center",
+        autoClose: 3000, // 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored", // or "light", "dark"
+      });
       // console.log(error)
     }
   }
