@@ -25,6 +25,23 @@ const Navbar = () => {
   }
   }
 
+
+  const send_Verification_OTP = async ( ) => {
+    try {
+      axios.defaults.withCredentials = true ; 
+      const {data} = await axios.post(`${Backend_URL}/api/auth/send-verify-otp`)
+      if(data.success){
+        toast.success("Verification OTP Sent Successfully!")
+        navigate("/EmailVerify");
+      }else{
+        toast.error(data.message)
+      }
+
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
   return (
     <div className='w-full flex justify-between items-center p-4 sm:p-6
     sm:px-24 absolute top-0'> 
@@ -39,7 +56,9 @@ const Navbar = () => {
          top-0 right-0 text-black pt-10 z-10'>
           <ul className='list-none m-0 p-2 bg-gray-100 text-sm'>
 
-            { !UserData.isAccountVerify && <li className='py-1 px-2 hover:border-gray-200 cursor-pointer
+            { !UserData.isAccountVerify && <li 
+            onClick={send_Verification_OTP}
+            className='py-1 px-2 hover:border-gray-200 cursor-pointer
             '>verify Email</li>
             }
 
