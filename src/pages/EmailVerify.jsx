@@ -21,6 +21,14 @@ const EmailVerify = () => {
       >
         Enter the 6-digit code send to your email id.
       </p>
+      <div className="flex justify-center mb-8 gap-2">
+      {
+        Array(6).fill(0).map((_,index)=>{
+         return <input type="text" maxLength="1" key={index} required className="
+          w-12 h-12 bg-[#333A5C] text-white text-center text-xl rounded-md"/>
+        })
+      }
+      </div>
       </form>
     </div>
   );
