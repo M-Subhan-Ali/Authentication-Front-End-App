@@ -54,6 +54,24 @@ const EmailVerify = () => {
   }
 
 
+  const HandlePaste = ( e ) => {
+
+
+    const paste = e.clipboardData.getData("text")
+
+    const pasteArray = paste.split("")
+
+    pasteArray.forEach( ( character , index ) => {
+
+      if(inputRefs.current[index]){
+        inputRefs.current[index].value = character
+      }
+    })
+
+
+    
+
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-400 ">
@@ -73,7 +91,7 @@ const EmailVerify = () => {
       >
         Enter the 6-digit code send to your email id.
       </p>
-      <div className="flex justify-center mb-8 gap-1.5 md:gap-2">
+      <div className="flex justify-center mb-8 gap-1.5 md:gap-2" onPaste={HandlePaste}>
       {
         Array(6).fill(0).map((_,index)=>{
          return <input type="text" maxLength="1" key={index} required 
