@@ -10,13 +10,19 @@ import { toast } from "react-toastify";
 const EmailVerify = () => {
   const navigate = useNavigate();
 
-  const { Backend_URL } = useContext(appContext)
+  const { Backend_URL , isLoggedIn, UserData, getUserData } = useContext(appContext)
 
-  const SubmitHandler = async () => {
+  axios.defaults.withCredentials = true ;
+
+  const SubmitHandler = async (e) => {
     try {
-    
-      // axios.defaults.withCredentials = true
-    const { data } = await axios.post(`${Backend_URL}/api/auth/verifyAccount`)
+       e.preventDefault();
+     
+       const otpArray = inputRefs.current.map(subhan => subhan.value )
+
+       const otp = otpArray.join(""); 
+
+    const { data } = await axios.post(`${Backend_URL}/api/auth/verifyAccount`,{otp})
   
     if( data.success ){
      toast.success(data.message)
@@ -72,6 +78,8 @@ const EmailVerify = () => {
     
 
   }
+
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-400 ">
