@@ -50,7 +50,7 @@ const Navbar = () => {
       {
         UserData ? 
         <div className='w-8 h-8 flex justify-center items-center rounded-full
-         bg-black text-white relative group'>
+         bg-black text-white relative group cursor-pointer'>
          {UserData.name[0].toUpperCase()}
          <div className='absolute hidden group-hover:block
          top-0 right-0 text-black pt-10 z-10'>
