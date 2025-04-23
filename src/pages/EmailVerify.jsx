@@ -70,12 +70,11 @@ const EmailVerify = () => {
   };
  
 
-  // useEffect(()=>{
+  useEffect(()=>{
     
-  //   isLoggedIn && UserData.isAccountVerified && navigate("/")
+    isLoggedIn && UserData.isAccountVerify && navigate("/")
 
-  // },[ isLoggedIn, UserData ])
-  console.log(UserData)
+  },[ isLoggedIn, UserData ])
 
 
 
@@ -123,7 +122,7 @@ const EmailVerify = () => {
         <button
           type="submit"
           className="w-full py-3 bg-gradient-to-r from-indigo-500 to-indigo-900
-      text-white rounded-full"
+      text-white rounded-full cursor-pointer"
         >
           Verify Email
         </button>
