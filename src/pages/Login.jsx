@@ -105,7 +105,7 @@ const Login = () => {
     bg-gradient-to-br from-blue-200 to-purple-400 '>
       <img 
       onClick={()=>navigate("/")}
-      src={assets.logo} alt="logo" className='absolute left-5 sm:left-20 top-5 w-28 sm:w-32
+      src={assets.logo} alt="logo" className='absolute left-5 sm:left-16 md:left-10 lg:left-24 top-1 sm:top-5 w-28 sm:w-32
       cursor-pointer' />
       <div className='bg-slate-900 p-10 rounded-lg shadow-lg w-full sm:w-96
       text-sm text-indigo-300'>
